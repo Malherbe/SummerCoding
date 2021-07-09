@@ -12,7 +12,8 @@ def find_mismatch(text):
         if next in "([{":
             # Process opening bracket, write your code here
             opening_brackets_stack.append(next)
-            print(i ,"before")
+            #k= i+1
+           
 
         if next in ")]}":
             # Process closing bracket, write your code here
@@ -23,13 +24,17 @@ def find_mismatch(text):
             next == '}' and top == '{':
             
                 opening_brackets_stack.pop()
-                #print(text[i], "after")
                 pass
+        else:
+            if i == 0:
+                k = i+1
+            else:
+                k =i+2
      
-    # if not opening_brackets_stack:
-    #     print(next,"contains valid parentheses.")
-    # else:
-    #     print(next, index,"contains invalid parentheses.")
+    if not opening_brackets_stack:
+        print("Success")
+    else:
+        print(k)
 
 def main():
     text = input()
