@@ -4,35 +4,61 @@ import sys
 import threading
 
 class Node:
-        def __init__(self, data):
-            self.left = None
-            self.right = None
-            self.data = data
+	def __init__(self, data, left=None, right=None):
+		self.data = data
+		self.left = left
+		self.right = right
+
+
+def inorder(root):
+
+	if root is None:
+		return
+
+	inorder(root.left)
+	print(root.data, end=' ')
+	inorder(root.right)
+
 
 def compute_height(n, parents):
-    # Replace this code with a faster implementation 
-    nodes= [n]
-    for i in range(n):
-        nodes[i] = Node()
-    for child_index in range(n):
-        if parents[child_index] == -1:
-            root = child_index
-        else:
-            nodes[parents[child_index]].append(nodes[child_index])
-        # height = 0
-        # current = vertex
-        # while current != -1:
-        #     height += 1
-        #     current = parents[current]
-        # max_height = max(max_height, height)
-    return nodes
+    	# create an empty dictionary
+	dict = {}
+
+	# create `n` new tree nodes, each having a value from 0 to `n-1`,
+	# and store them in a dictionary
+	for i in range(n):
+		dict[i] = Node(i)
+
+	# represents the root node of a binary tree
+	root = None
+
+	# traverse the parent list and build the tree
+	for i, e in enumerate(parents):
+
+		# if the parent is -1, set the root to the current node having the
+		# value `i` (stored in `dict[i]`)
+		if e == -1:
+			root = dict[i]
+		else:
+			# get the parent for the current node
+			ptr = dict[e]
+
+			# if the parent's left child is filled, map the node to its right child
+			if ptr.left:
+				ptr.right = dict[i]
+			# if the parent's left child is empty, map the node to it
+			else:
+				ptr.left = dict[i]
+
+	# return root of the constructed tree
+	return root
 
 
 def main():
     n = int(input())
     parents = list(map(int, input().split()))
     print(compute_height(n, parents))
-
+  
 
 # In Python, the default limit on recursion depth is rather low,
 # so raise it here for this problem. Note that to take advantage
