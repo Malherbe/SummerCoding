@@ -1,4 +1,4 @@
-import requests, os, uuid, json
+import requests, os, uuid
 from dotenv import load_dotenv
 load_dotenv()
 
